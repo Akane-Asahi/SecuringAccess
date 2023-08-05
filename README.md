@@ -117,3 +117,67 @@ In this case I wanted to write the updated allow list as a string to the file `"
 
 ## Summary
 I created an algorithm that removes IP addresses identified in a `remove_list` variable from the `"allow_list.txt"` file of approved IP addresses. This algorithm involved opening the file, converting it to a string to be read, and then converting this string to a list stored in the variable `ip_addresses`. I then iterated through the IP addresses in `remove_list`. With each iteration, I evaluated `if` the `element` was part of the `ip_addresses` list. If it was, I applied the `.remove()` method to it to remove the element from `ip_addresses`. After this, I used the `.join()` method to convert the `ip_addresses` back into a string so that I could write over the contents of the `"allow_list.txt"` file with the revised list of IP addresses.
+
+
+### Full Code
+
+```python
+# Assign `import_file` to the name of the file
+
+import_file = "data/allow_list.txt"
+
+# Assign `remove_list` to a list of IP addresses that are no longer allowed to access restricted information.
+
+remove_list = ["192.168.97.225", "192.168.158.170", "192.168.201.40", "192.168.58.57"]
+
+# Build `with` statement to read in the initial contents of the file
+
+with open(import_file, "r") as file:
+
+    # Use `.read()` to read the imported file and store it in a variable named `ip_addresses`
+
+    ip_addresses = file.read()
+
+# Use `.split()` to convert `ip_addresses` from a string to a list
+
+ip_addresses = ip_addresses.split()
+
+# Build iterative statement
+# Name loop variable `element`
+# Loop through `remove_list`
+
+for element in remove_list:
+    
+    # Create conditional statement to evaluate if `element` is in `ip_addresses`
+
+    if element in ip_addresses:
+
+        # use the `.remove()` method to remove
+        # elements from `ip_addresses`
+
+        ip_addresses.remove(element)
+        
+# Convert `ip_addresses` back to a string so that it can be written into the text file
+
+ip_addresses = "\n".join(ip_addresses)
+
+# Build `with` statement to rewrite the original file
+
+with open(import_file, "w") as file:
+
+    # Rewrite the file, replacing its contents with `ip_addresses`
+
+    file.write(ip_addresses)
+
+# Build `with` statement to read in the updated file
+
+with open(import_file, "r") as file:
+
+    # Read in the updated file and store the contents in `text`
+
+    text = file.read()
+
+# Display the contents of `text`
+
+print(text)
+```
